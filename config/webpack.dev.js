@@ -1,5 +1,9 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin'); //通过 npm 安装
 const LogWebpackPlugin = require('../plugins/logWebpackPlugin');
+const FileListPlugin = require('../plugins/FileListPlugin');
+const PrefetchPlugin = require('../plugins/PrefetchPlugin');
+const CodeBeautify = require('../plugins/CodeBeautify');
+const SetScriptTimestampPlugin = require('../plugins/SetScriptTimestampPlugin');
 const path = require('path');        //node内置path模块，该模块主要集成文件系统路径操作API
 
 const config = {
@@ -9,6 +13,7 @@ const config = {
     },
     output: {   //js打包压缩后的出口文件，多入口时对应的配置应做相对变化 注释②
         path: path.resolve(__dirname,'../dist'),
+        publicPath: "",
         filename:'bundle.js'
     },
     module: {
@@ -16,20 +21,24 @@ const config = {
     },
     plugins: [
         new HtmlWebpackPlugin({template: './src/index.html'}),  //根据项目提供HTML模板，生成新页面，并将对应的输出打包压缩输出的js，链接到页面中；详细配置见注释④
-        new LogWebpackPlugin(() => {
+       /* new LogWebpackPlugin(() => {
             // Webpack 模块完成转换成功
             console.log('emit 事件发生啦，所有模块的转换和代码块对应的文件已经生成好~')
         } , () => {
             // Webpack 构建成功，并且文件输出了后会执行到这里，在这里可以做发布文件操作
             console.log('done 事件发生啦，成功构建完成~')
-        })
+        }),*/
+        // new FileListPlugin(),
+        // new PrefetchPlugin(),
+        new SetScriptTimestampPlugin(),
+        // new CodeBeautify({filename: "bundle.js"}),
     ],
     devServer: {        //webpack-dev-server配置（仅开发环境需要）
-        contentBase: path.join(__dirname, './dist'), //编译打包文件的位置
-        publicPath: '/',
+        contentBase: path.join(__dirname, '../dist'), //编译打包文件的位置
+        publicPath: '/public',
         port: 1111,                 //服务器端口号
-        host: '0.0.0.0',
-        proxy: {},                  //代理列表
+        // host: '0.0.0.0',
+        // proxy: {},                  //代理列表
         compress: true,
         historyApiFallback: true,   //开启服务器history重定向模式
     }

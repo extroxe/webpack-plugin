@@ -1,0 +1,30 @@
+class CodeBeautify {
+    constructor(options) {
+        this.options = options
+        this.externalModules = {}
+    }
+    apply(compiler) {
+        var reg = /("([^\\\"]*(\\.)?)*")|('([^\\\']*(\\.)?)*')|(\/{2,}.*?(\r|\n))|(\/\*(\n|.)*?\*\/)|(\/\*\*\*\*\*\*\/)/g
+        compiler.hooks.emit.tap('CodeBeautify', (compilation)=> {
+            Object.keys(compilation.assets).forEach((data)=> {
+                let content = compilation.assets[data].source() // 欲处理的文本
+                content = content.replace(reg, function (word) { // 去除注释后的文本
+                    return /^\/{2,}/.test(word) || /^\/\*!/.test(word) || /^\/\*{3,}\//.test(word) ? "" : word;
+                });
+                if(data.includes(".js")){
+                    content = "/****************user: test******** \n" +
+                        "************date: 2020-2019********/" + content;
+                }
+                compilation.assets[data] = {
+                    source(){
+                        return content
+                    },
+                    size(){
+                        return content.length
+                    }
+                }
+            })
+        })
+    }
+}
+module.exports = CodeBeautify

@@ -6,6 +6,7 @@ class LogWebpackPlugin {
     apply(compiler) {
         compiler.hooks.emit.tap('LogWebpackPlugin', () => {
             // 在 emit 事件中回调 emitCallback
+            console.log('我会在生成资源到 output 目录之前执行')
             this.emitCallback();
         });
         compiler.hooks.done.tap('LogWebpackPlugin', (err) => {

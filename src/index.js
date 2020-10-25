@@ -1,4 +1,13 @@
+/**
+ * user: yt,
+ * date:new Date.now()
+ */
 import _ from 'lodash';
+
+import('./lazy').then(name => {
+    console.log(name);
+});
+
 function component() {
     const element = document.createElement('div');
 
