@@ -39,6 +39,7 @@ class SetScriptTimestampPlugin {
 
     // 方法一
       apply(compiler) {
+        console.log(compiler.plugin)
           compiler.hooks.compilation.tap(this.name, (compilation, callback) => {
                   const run = this.run.bind(this, compilation);
                   if (compilation.hooks.htmlWebpackPluginAfterHtmlProcessing) {
@@ -46,8 +47,8 @@ class SetScriptTimestampPlugin {
                       compilation.hooks.htmlWebpackPluginAfterHtmlProcessing.tapAsync(this.name, run);
                   } else {
                       // html-webpack-plugin v4
-                      // HtmlWebpackPlugin.getHooks(compilation).beforeAssetTagGeneration.tapAsync(this.name, run);
-                      HtmlWebpackPlugin.getHooks(compilation).beforeEmit.tapAsync(this.name, run);
+                      HtmlWebpackPlugin.getHooks(compilation).beforeAssetTagGeneration.tapAsync(this.name, run);
+                      // HtmlWebpackPlugin.getHooks(compilation).beforeEmit.tapAsync(this.name, run);
                       // HtmlWebpackPlugin.getHooks(compilation).alterAssetTags.tapAsync(this.name, run);
                       // HtmlWebpackPlugin.getHooks(compilation).alterAss
                       // etTagGroups.tapAsync(this.name, run);

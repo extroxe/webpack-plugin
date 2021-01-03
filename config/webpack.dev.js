@@ -21,8 +21,7 @@ const config = {
         rules: [] // 配置loder使用的规则、作用范围、控制输出的名称、位置等；主要作用是编译，解析文件； 暂时不使用loader
     },
     plugins: [
-        new HtmlWebpackPlugin({filename: "index.html",template: './src/index.html', chunks: ["index"]}),  //根据项目提供HTML模板，生成新页面，并将对应的输出打包压缩输出的js，链接到页面中；详细配置见注释④
-        new HtmlWebpackPlugin({filename: "newPage.html", template: './src/newPage.html', chunks: ["main"]}),
+        new HtmlWebpackPlugin({filename: "index.html",template: './src/index.html'}),  //根据项目提供HTML模板，生成新页面，并将对应的输出打包压缩输出的js，链接到页面中；详细配置见注释④
         /* new LogWebpackPlugin(() => {
             // Webpack 模块完成转换成功
             console.log('emit 事件发生啦，所有模块的转换和代码块对应的文件已经生成好~')
@@ -31,7 +30,7 @@ const config = {
             console.log('done 事件发生啦，成功构建完成~')
         }),*/
         // new FileListPlugin(),
-        new PrefetchPlugin(),
+        // new PrefetchPlugin(),
         new SetScriptTimestampPlugin(),
         // new CodeBeautify({filename: "bundle.js"}),
     ],
